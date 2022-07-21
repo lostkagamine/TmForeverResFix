@@ -39,6 +39,28 @@ BOOL WINAPI HookShowWindow(HWND hWnd, int nCmdShow)
 		SetWindowPos(hWnd, HWND_TOP, 200, 200, iWidth, iHeight,
 			SWP_NOMOVE | SWP_NOREPOSITION);
 
+		WINDOWPOS pos;
+		memset(&pos, 0, sizeof(WINDOWPOS));
+		pos.hwnd = hWnd;
+		pos.hwndInsertAfter = HWND_TOP;
+		pos.x = 0;
+		pos.y = 0;
+		pos.cx = iWidth;
+		pos.cy = iHeight;
+		pos.flags = SWP_NOMOVE | SWP_NOREPOSITION;
+
+		RECT r;
+		memset(&r, 0, sizeof(RECT));
+		r.left = 0;
+		r.top = 0;
+		r.right = iWidth;
+		r.bottom = iHeight;
+
+		PostMessage(hWnd, WM_WINDOWPOSCHANGING, 0, (LPARAM)&pos);
+		PostMessage(hWnd, WM_WINDOWPOSCHANGED, 0, (LPARAM)&pos);
+		PostMessage(hWnd, WM_MOVING, 0, (LPARAM)&r);
+		PostMessage(hWnd, WM_MOVE, 0, 0);
+
 		swDone = true;
 	}
 
