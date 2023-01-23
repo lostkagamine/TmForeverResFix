@@ -99,6 +99,8 @@ BOOL WINAPI HookShowWindow(HWND hWnd, int nCmdShow)
 				SWP_FRAMECHANGED);
 
 			pShouldUnfullscreenOnExit = TRUE;
+
+			break;
 		}
 		}
 
